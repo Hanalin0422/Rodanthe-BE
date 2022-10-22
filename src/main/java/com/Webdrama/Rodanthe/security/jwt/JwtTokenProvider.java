@@ -43,6 +43,7 @@ public class JwtTokenProvider {
         Date validity = new Date(now.getTime() + ACCESS_TOKEN_EXPIRE_LENGTH);
 
         CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        String email = user.getEmail();
 
         String userId = user.getName();
         String role = authentication.getAuthorities().stream()
@@ -53,7 +54,7 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .setSubject(userId)
                 .claim(AUTHORITIES_KEY, role)
-                .setIssuer("debrains")
+                .setIssuer(email)
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .compact();
@@ -63,9 +64,12 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date validity = new Date(now.getTime() + REFRESH_TOKEN_EXPIRE_LENGTH);
 
+        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+        String email = user.getEmail();
+
         String refreshToken = Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-                .setIssuer("debrains")
+                .setIssuer(email)
                 .setIssuedAt(now)
                 .setExpiration(validity)
                 .compact();
