@@ -129,4 +129,20 @@ public class JwtTokenProvider {
             return e.getClaims();
         }
     }
+
+    // accessToken 만료 시키기
+    public Long getExpiration(String accessToken){
+        // accessToken 남은 유효 기간
+        Date expiration = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(accessToken).getBody().getExpiration();
+        Long now = new Date().getTime();
+        return (expiration.getTime() - now);
+    }
+
+    // refreshToken DB에서 지우기
+//    private void deleteRefreshToken(Authentication authentication){
+//        CustomUserDetails user = (CustomUserDetails) authentication.getPrincipal();
+//        Long id = Long.valueOf(user.getName());
+//
+//        memberRepository.dropRefreshToken(id);
+//    }
 }

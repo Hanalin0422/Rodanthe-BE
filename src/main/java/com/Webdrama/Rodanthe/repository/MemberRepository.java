@@ -22,4 +22,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying
     @Query("UPDATE Member m SET m.refreshToken=:token WHERE m.id=:id")
     void updateRefreshToken(@Param("id") Long id, @Param("token") String token);
+
 }

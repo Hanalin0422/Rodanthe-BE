@@ -3,10 +3,7 @@ package com.Webdrama.Rodanthe.config;
 import com.Webdrama.Rodanthe.security.jwt.JwtAccessDeniedHandler;
 import com.Webdrama.Rodanthe.security.jwt.JwtAuthenticationEntryPoint;
 import com.Webdrama.Rodanthe.security.jwt.JwtAuthenticationFilter;
-import com.Webdrama.Rodanthe.security.oauth.CookieAuthorizationRequestRepository;
-import com.Webdrama.Rodanthe.security.oauth.CustomOAuth2UserService;
-import com.Webdrama.Rodanthe.security.oauth.OAuth2AuthenticationFailureHandler;
-import com.Webdrama.Rodanthe.security.oauth.OAuth2AuthenticationSuccessHandler;
+import com.Webdrama.Rodanthe.security.oauth.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
 
     @Override
     public void configure(WebSecurity webSecurity) throws Exception{
@@ -73,6 +71,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint) //401, 인증 과정에서 생길 exception 처리
                 .accessDeniedHandler(jwtAccessDeniedHandler); //403, 인가 과정에서 생길 exception 처리
+
+//        http
+//                .logout() // 로그아웃 처리
+//                .logoutUrl("/user/logout") // 로그아웃 처리 URL
+//                .logoutSuccessUrl("/");
 
         // 모든 request에서 JWT를 검사할때 filter를 추가함, UsernamePasswordAuthenticationFilter에서 클라이언트가 요청한 리소스의 접근 권한이 없을때 막는 역할을 하여 토큰을 먼저 검사
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
