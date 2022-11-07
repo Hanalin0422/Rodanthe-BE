@@ -27,7 +27,6 @@ public class WorkService {
                     .description(work.getDescription())
                     .genre(work.getGenre())
                     .dayOfWeek(work.getDayOfWeek())
-                    .thumbnailImg(work.getThumbnailImg())
                     .title(work.getTitle())
                     .build();
             return workDto;

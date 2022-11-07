@@ -16,17 +16,15 @@ public class WorkDto {
     private String dayOfWeek;
     private String genre;
     private String description;
-    private String thumbnailImg;
 
     @Builder
-    public WorkDto(Long workId, Long id, String title, String dayOfWeek, String genre, String description, String thumbnailImg){
+    public WorkDto(Long workId, Long id, String title, String dayOfWeek, String genre, String description){
         this.workId = workId;
         this.id = id;
         this.title = title;
         this.dayOfWeek = dayOfWeek;
         this.genre = genre;
         this.description = description;
-        this.thumbnailImg = thumbnailImg;
     }
 
     public Work toWork(){
@@ -37,7 +35,6 @@ public class WorkDto {
                 .dayOfWeek(dayOfWeek)
                 .genre(genre)
                 .description(description)
-                .thumbnailImg(thumbnailImg)
                 .build();
     }
 }

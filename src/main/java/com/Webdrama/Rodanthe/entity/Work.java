@@ -31,7 +31,4 @@ public class Work {
 
     @Column
     private String description;
-
-    @Column
-    private String thumbnailImg;
 }
