@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -17,5 +18,7 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
     @Modifying
     @Query("UPDATE Work w SET w.coverImg=:coverImgUrl WHERE w.workId=:workId")
     void saveCoverImgUrl(@Param("workId") Long workId, @Param("coverImgUrl") String coverImgUrl);
+
+    List<Work> findAllById(Long id);
 
 }

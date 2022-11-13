@@ -9,6 +9,10 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 @Log4j2
 @RestController
 @RequiredArgsConstructor
@@ -31,8 +35,9 @@ public class WorkMemberController {
 
 
     @GetMapping("/work/{userId}")
-    public WorkDto giveInfo(@PathVariable Long userId){
-        WorkDto workDto = workService.getWork(userId);
-        return workDto;
+    public List<Work> giveInfo(@PathVariable Long userId){
+        List<Work> workUserList = workRepository.findAllById(userId);
+
+        return workUserList;
     }
 }

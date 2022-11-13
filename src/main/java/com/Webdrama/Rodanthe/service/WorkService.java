@@ -6,6 +6,7 @@ import com.Webdrama.Rodanthe.repository.WorkRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,13 +24,15 @@ public class WorkService {
         workRepository.saveCoverImgUrl(workId, path);
     }
 
-    @Transactional
-    public WorkDto getWork(Long userId){
+/*    @Transactional
+    public List<Work> getWork(Long userId){
+        List<Work> workList = 0;
         Optional<Work> workOptional = workRepository.findById(userId);
         if(workOptional.isPresent()){
             Work work = workOptional.get();
 
             WorkDto workDto = WorkDto.builder()
+                    .workId(work.getWorkId())
                     .id(work.getId())
                     .description(work.getDescription())
                     .genre(work.getGenre())
@@ -37,8 +40,9 @@ public class WorkService {
                     .title(work.getTitle())
                     .coverImg(work.getCoverImg())
                     .build();
+            workList.add(workDto);
             return workDto;
         }
         return null;
-    }
+    }*/
 }
