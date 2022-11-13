@@ -12,8 +12,15 @@ import java.util.Optional;
 public class WorkService {
 
     private WorkRepository workRepository;
-    public WorkService(WorkRepository workRepository){
+    private final S3UploadService s3UploadService;
+    public WorkService(WorkRepository workRepository, S3UploadService s3UploadService){
         this.workRepository = workRepository;
+        this.s3UploadService = s3UploadService;
+    }
+
+    public void updateCoverImg(Long workId){
+        String path = s3UploadService.getCoverImgPath(workId);
+        workRepository.saveCoverImgUrl(workId, path);
     }
 
     @Transactional
@@ -28,6 +35,7 @@ public class WorkService {
                     .genre(work.getGenre())
                     .dayOfWeek(work.getDayOfWeek())
                     .title(work.getTitle())
+                    .coverImg(work.getCoverImg())
                     .build();
             return workDto;
         }

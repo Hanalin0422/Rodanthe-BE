@@ -20,7 +20,7 @@ public class Work {
     @Column
     private Long id; //userId ex)1, 2, 3 ,,,
 
-    @Column
+    @Column(unique = true)
     private String title;
 
     @Column
@@ -31,4 +31,7 @@ public class Work {
 
     @Column
     private String description;
+
+    @Column
+    private String coverImg;
 }

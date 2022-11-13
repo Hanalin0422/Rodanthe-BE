@@ -20,7 +20,6 @@ public class WorkMemberController {
 
     @Autowired
     private final WorkService workService;
-
     @PostMapping("/work/{userId}")
     public Long create(@PathVariable Long userId, @RequestBody WorkDto workPostDto) {
         workPostDto.setId(userId);
@@ -29,6 +28,7 @@ public class WorkMemberController {
         Work saved = workRepository.save(work);
         return saved.getWorkId(); // 저장된 작품의 pk Id 반환
     }
+
 
     @GetMapping("/work/{userId}")
     public WorkDto giveInfo(@PathVariable Long userId){
