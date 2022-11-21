@@ -33,4 +33,5 @@ public class WorkController {
     public void updateCoverImgUrl(@PathVariable Long workId){
         workService.updateCoverImg(workId);
     }
+
 }

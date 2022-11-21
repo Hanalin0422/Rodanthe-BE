@@ -20,7 +20,7 @@ public class Work {
     @Column
     private Long id; //userId ex)1, 2, 3 ,,,
 
-    @Column(unique = true)
+    @Column
     private String title;
 
     @Column

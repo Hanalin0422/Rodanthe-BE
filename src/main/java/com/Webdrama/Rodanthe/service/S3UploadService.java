@@ -23,6 +23,10 @@ public class S3UploadService {
     public String getCoverImgPath(Long workId){
         String path = amazonS3.getUrl(bucketName, "UserImg/"+workId+"/"+workId+".png").toString();
         return path;
+    }
 
+    public String getVideoPath(Long workId, Long episode){
+        String path = amazonS3.getUrl(bucketName,"DramaVideo/"+workId+"/"+episode+".mp4").toString();
+        return path;
     }
 }
