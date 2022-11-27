@@ -1,6 +1,7 @@
 package com.Webdrama.Rodanthe.controller;
 
 import com.Webdrama.Rodanthe.dto.WorkDto;
+import com.Webdrama.Rodanthe.dto.request.WorkRequestDto;
 import com.Webdrama.Rodanthe.entity.Work;
 import com.Webdrama.Rodanthe.repository.WorkRepository;
 import com.Webdrama.Rodanthe.service.WorkService;
@@ -9,7 +10,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,9 +41,11 @@ public class WorkMemberController {
         return workUserList;
     }
 
-    @GetMapping("/work/{workId}")
-    public Optional<Work> giveWorkInfo(@PathVariable Long workId){
-        return workRepository.findByWorkId(workId);
+    @PutMapping("/work/{workId}")
+    public String updateWorkInfo(@PathVariable Long workId, @RequestBody WorkRequestDto workRequestDto){
+        workService.updateCoverImg(workId);
+        workService.updateWorkInfo(workId, workRequestDto);
+        return "작품번호 " +  workId + "의 수정이 완료되었습니다.";
     }
 
 }

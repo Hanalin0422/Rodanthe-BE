@@ -7,9 +7,9 @@ import com.Webdrama.Rodanthe.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Log4j2
 @RestController
@@ -31,6 +31,12 @@ public class VideoController {
         videoRequestDto.setVideoUrl(videoUrl);
         Video video = videoRequestDto.toVideo();
         videoRepository.save(video);
+    }
+
+    @GetMapping("/work/videoList/{workId}")
+    public List<Video> getVideoInfo(@PathVariable Long workId){
+        List<Video> videos = videoRepository.findByWorkId(workId);
+        return videos;
     }
 
 }

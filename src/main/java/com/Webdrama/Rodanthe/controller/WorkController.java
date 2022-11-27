@@ -1,6 +1,8 @@
 package com.Webdrama.Rodanthe.controller;
 
+import com.Webdrama.Rodanthe.entity.Video;
 import com.Webdrama.Rodanthe.entity.Work;
+import com.Webdrama.Rodanthe.repository.VideoRepository;
 import com.Webdrama.Rodanthe.repository.WorkRepository;
 import com.Webdrama.Rodanthe.service.WorkService;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @Log4j2
 @RestController
@@ -32,6 +34,14 @@ public class WorkController {
     @PostMapping("/work/get/workId/{workId}")
     public void updateCoverImgUrl(@PathVariable Long workId){
         workService.updateCoverImg(workId);
+    }
+
+    @GetMapping("/work/{workId}")
+    public Optional<Work> getWorkInfo(@PathVariable Long workId){
+        Optional<Work> work = workRepository.findByWorkId(workId);
+
+
+        return work;
     }
 
 }

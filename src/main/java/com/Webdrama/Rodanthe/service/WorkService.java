@@ -1,6 +1,7 @@
 package com.Webdrama.Rodanthe.service;
 
 import com.Webdrama.Rodanthe.dto.WorkDto;
+import com.Webdrama.Rodanthe.dto.request.WorkRequestDto;
 import com.Webdrama.Rodanthe.entity.Work;
 import com.Webdrama.Rodanthe.repository.WorkRepository;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,25 @@ public class WorkService {
         String path = s3UploadService.getCoverImgPath(workId);
         workRepository.saveCoverImgUrl(workId, path);
     }
+    public WorkDto updateWorkInfo(Long workId, WorkRequestDto workRequestDto){
+        Optional<Work> workOptional = workRepository.findByWorkId(workId);
+        if(workOptional.isPresent()){
+            Work work = workOptional.get();
+
+            WorkDto workDto = WorkDto.builder()
+                    .workId(work.getWorkId())
+                    .id(work.getId())
+                    .description(workRequestDto.getDescription())
+                    .genre(workRequestDto.getGenre())
+                    .dayOfWeek(workRequestDto.getDayOfWeek())
+                    .title(workRequestDto.getTitle())
+                    .build();
+            return workDto;
+
+        }
+        return null;
+    }
+
 
 /*    @Transactional
     public List<Work> getWork(Long userId){

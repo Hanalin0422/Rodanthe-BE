@@ -17,6 +17,7 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
     Optional<Work> findByWorkId(Long workId);
 
 
+
     @Transactional
     @Modifying
     @Query("UPDATE Work w SET w.coverImg=:coverImgUrl WHERE w.workId=:workId")
