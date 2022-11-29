@@ -41,10 +41,10 @@ public class WorkMemberController {
         return workUserList;
     }
 
-    @PutMapping("/work/{workId}")
+    @PutMapping("/work/update/{workId}")
     public String updateWorkInfo(@PathVariable Long workId, @RequestBody WorkRequestDto workRequestDto){
-        workService.updateCoverImg(workId);
-        workService.updateWorkInfo(workId, workRequestDto);
+        Work workInfo = workService.updateWorkInfo(workId, workRequestDto);
+        workRepository.save(workInfo);
         return "작품번호 " +  workId + "의 수정이 완료되었습니다.";
     }
 

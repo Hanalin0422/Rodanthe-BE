@@ -24,7 +24,7 @@ public class WorkService {
         String path = s3UploadService.getCoverImgPath(workId);
         workRepository.saveCoverImgUrl(workId, path);
     }
-    public WorkDto updateWorkInfo(Long workId, WorkRequestDto workRequestDto){
+    public Work updateWorkInfo(Long workId, WorkRequestDto workRequestDto){
         Optional<Work> workOptional = workRepository.findByWorkId(workId);
         if(workOptional.isPresent()){
             Work work = workOptional.get();
@@ -36,8 +36,12 @@ public class WorkService {
                     .genre(workRequestDto.getGenre())
                     .dayOfWeek(workRequestDto.getDayOfWeek())
                     .title(workRequestDto.getTitle())
+                    .coverImg(work.getCoverImg())
                     .build();
-            return workDto;
+
+            
+            Work workEntity = workDto.toWork();
+            return workEntity;
 
         }
         return null;
