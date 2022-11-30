@@ -1,5 +1,6 @@
 package com.Webdrama.Rodanthe.service;
 
+import com.Webdrama.Rodanthe.dto.SearchWorkDto;
 import com.Webdrama.Rodanthe.dto.WorkDto;
 import com.Webdrama.Rodanthe.dto.request.WorkRequestDto;
 import com.Webdrama.Rodanthe.entity.Work;
@@ -7,6 +8,8 @@ import com.Webdrama.Rodanthe.repository.WorkRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,26 +50,21 @@ public class WorkService {
         return null;
     }
 
+    @Transactional
+    public List<SearchWorkDto> giveSearchWork(String searchWord) {
+        List<Work> workList = this.workRepository.searchWork(searchWord);
+        List<SearchWorkDto> searchWorkDtoList = new ArrayList<>();
 
-/*    @Transactional
-    public List<Work> getWork(Long userId){
-        List<Work> workList = 0;
-        Optional<Work> workOptional = workRepository.findById(userId);
-        if(workOptional.isPresent()){
-            Work work = workOptional.get();
-
-            WorkDto workDto = WorkDto.builder()
+        for(int i=0; i<workList.size(); i++){
+            Work work = workList.get(i);
+            SearchWorkDto searchWorkDto = SearchWorkDto.builder()
                     .workId(work.getWorkId())
-                    .id(work.getId())
-                    .description(work.getDescription())
-                    .genre(work.getGenre())
-                    .dayOfWeek(work.getDayOfWeek())
-                    .title(work.getTitle())
                     .coverImg(work.getCoverImg())
+                    .title(work.getTitle())
                     .build();
-            workList.add(workDto);
-            return workDto;
+            searchWorkDtoList.add(searchWorkDto);
         }
-        return null;
-    }*/
+        return searchWorkDtoList;
+    }
+
 }

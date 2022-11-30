@@ -1,5 +1,7 @@
 package com.Webdrama.Rodanthe.controller;
 
+import com.Webdrama.Rodanthe.dto.SearchWorkDto;
+import com.Webdrama.Rodanthe.dto.request.WorkSearchRequestDto;
 import com.Webdrama.Rodanthe.entity.Video;
 import com.Webdrama.Rodanthe.entity.Work;
 import com.Webdrama.Rodanthe.repository.VideoRepository;
@@ -39,9 +41,15 @@ public class WorkController {
     @GetMapping("/work/{workId}")
     public Optional<Work> getWorkInfo(@PathVariable Long workId){
         Optional<Work> work = workRepository.findByWorkId(workId);
-
-
         return work;
+    }
+
+    @PostMapping("/work/search")
+    public List<SearchWorkDto> giveSearchInfo(@RequestBody WorkSearchRequestDto workSearchDto){
+        String searchWord = workSearchDto.getSearchWord();
+        List<SearchWorkDto> works = workService.giveSearchWork(searchWord);
+
+        return works;
     }
 
 }
