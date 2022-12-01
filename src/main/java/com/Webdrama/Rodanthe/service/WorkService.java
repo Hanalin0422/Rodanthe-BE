@@ -71,4 +71,11 @@ public class WorkService {
         }
     }
 
+    public void deleteWork(Long workId){
+        Optional<Work> workOptional = workRepository.findByWorkId(workId);
+        if(workOptional.isPresent()){
+            Work work = workOptional.get();
+            workRepository.delete(work);
+        }
+    }
 }

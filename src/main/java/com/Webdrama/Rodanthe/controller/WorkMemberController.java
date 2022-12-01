@@ -4,6 +4,7 @@ import com.Webdrama.Rodanthe.dto.WorkDto;
 import com.Webdrama.Rodanthe.dto.request.WorkRequestDto;
 import com.Webdrama.Rodanthe.entity.Work;
 import com.Webdrama.Rodanthe.repository.WorkRepository;
+import com.Webdrama.Rodanthe.service.VideoService;
 import com.Webdrama.Rodanthe.service.WorkService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,6 +25,9 @@ public class WorkMemberController {
 
     @Autowired
     private final WorkService workService;
+    @Autowired
+    private final VideoService videoService;
+
     @PostMapping("/work/{userId}")
     public Long create(@PathVariable Long userId, @RequestBody WorkDto workPostDto) {
         workPostDto.setId(userId);
@@ -46,6 +50,13 @@ public class WorkMemberController {
         Work workInfo = workService.updateWorkInfo(workId, workRequestDto);
         workRepository.save(workInfo);
         return "작품번호 " +  workId + "의 수정이 완료되었습니다.";
+    }
+
+    @DeleteMapping("/work/delete/{workId}")
+    public String deleteWork(@PathVariable Long workId){
+        workService.deleteWork(workId);
+        videoService.deleteVideoList(workId);
+        return "작품 " + workId + " 삭제 완료.";
     }
 
 }
