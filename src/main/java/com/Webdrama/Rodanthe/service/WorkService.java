@@ -52,19 +52,23 @@ public class WorkService {
 
     @Transactional
     public List<SearchWorkDto> giveSearchWork(String searchWord) {
-        List<Work> workList = this.workRepository.searchWork(searchWord);
-        List<SearchWorkDto> searchWorkDtoList = new ArrayList<>();
+        if(searchWord.trim() == "" ){
+            return null;
+        }else{
+            List<Work> workList = this.workRepository.searchWork(searchWord);
+            List<SearchWorkDto> searchWorkDtoList = new ArrayList<>();
 
-        for(int i=0; i<workList.size(); i++){
-            Work work = workList.get(i);
-            SearchWorkDto searchWorkDto = SearchWorkDto.builder()
-                    .workId(work.getWorkId())
-                    .coverImg(work.getCoverImg())
-                    .title(work.getTitle())
-                    .build();
-            searchWorkDtoList.add(searchWorkDto);
+            for(int i=0; i<workList.size(); i++){
+                Work work = workList.get(i);
+                SearchWorkDto searchWorkDto = SearchWorkDto.builder()
+                        .workId(work.getWorkId())
+                        .coverImg(work.getCoverImg())
+                        .title(work.getTitle())
+                        .build();
+                searchWorkDtoList.add(searchWorkDto);
+            }
+            return searchWorkDtoList;
         }
-        return searchWorkDtoList;
     }
 
 }
