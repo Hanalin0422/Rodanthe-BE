@@ -13,12 +13,14 @@ public class VideoRequestDto {
     private Long workId;
     private Long videoId;
     private String videoUrl;
+    private String episodeTitle;
     private Long episode;
 
     @Builder
-    public VideoRequestDto(Long videoId, Long workId, String videoUrl, Long episode){
+    public VideoRequestDto(Long videoId, Long workId, String episodeTitle,String videoUrl, Long episode){
         this.videoId = videoId;
         this.workId = workId;
+        this.episodeTitle = episodeTitle;
         this.videoUrl = videoUrl;
         this.episode = episode;
     }
@@ -27,6 +29,7 @@ public class VideoRequestDto {
         return Video.builder()
                 .videoId(videoId)
                 .workId(workId)
+                .episodeTitle(episodeTitle)
                 .videoUrl(videoUrl)
                 .episode(episode)
                 .build();

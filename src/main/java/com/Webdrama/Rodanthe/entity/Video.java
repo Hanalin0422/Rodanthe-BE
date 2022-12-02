@@ -24,6 +24,9 @@ public class Video {
     private String videoUrl;
 
     @Column
+    private String episodeTitle;
+
+    @Column
     private Long episode; // 몇화인지 표시하기 위한거
 
 
