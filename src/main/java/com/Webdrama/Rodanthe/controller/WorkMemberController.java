@@ -1,8 +1,11 @@
 package com.Webdrama.Rodanthe.controller;
 
 import com.Webdrama.Rodanthe.dto.WorkDto;
+import com.Webdrama.Rodanthe.dto.request.JjimRequestDto;
 import com.Webdrama.Rodanthe.dto.request.WorkRequestDto;
+import com.Webdrama.Rodanthe.entity.Jjim;
 import com.Webdrama.Rodanthe.entity.Work;
+import com.Webdrama.Rodanthe.repository.JjimRepository;
 import com.Webdrama.Rodanthe.repository.WorkRepository;
 import com.Webdrama.Rodanthe.service.VideoService;
 import com.Webdrama.Rodanthe.service.WorkService;
@@ -24,9 +27,14 @@ public class WorkMemberController {
     private final WorkRepository workRepository;
 
     @Autowired
+    private final JjimRepository jjimRepository;
+
+    @Autowired
     private final WorkService workService;
     @Autowired
     private final VideoService videoService;
+
+
 
     @PostMapping("/work/{userId}")
     public Long create(@PathVariable Long userId, @RequestBody WorkDto workPostDto) {
@@ -58,5 +66,30 @@ public class WorkMemberController {
         videoService.deleteVideoList(workId);
         return "작품 " + workId + " 삭제 완료.";
     }
+
+    // 찜하기 요청
+    @PostMapping("/jjim/work")
+    public String jjimWork(@RequestBody JjimRequestDto jjimRequestDto){
+        Jjim jjim = jjimRequestDto.toJjim();
+        jjimRepository.save(jjim);
+        return "찜하기가 완료 되었습니다.";
+    }
+
+    // 찜된거 확인 요청
+    @GetMapping("/jjim/work/get/{userId}/{workId}")
+    public boolean jjimWorkGiveInfo(@PathVariable Long userId, @PathVariable Long workId){
+        return workService.jjimGiveInfo(userId, workId);
+    }
+
+    // 찜 취소 요청
+    @PostMapping("/jjim/work/delete")
+    public String jjimWorkDelete(@RequestBody JjimRequestDto jjimRequestDto){
+        Long userId = jjimRequestDto.getId();
+        Long workId = jjimRequestDto.getWorkId();
+        workService.deleteJjim(userId, workId);
+        return "찜하기가 취소되었습니다.";
+    }
+
+
 
 }

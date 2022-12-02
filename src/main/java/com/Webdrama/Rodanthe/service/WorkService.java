@@ -3,10 +3,13 @@ package com.Webdrama.Rodanthe.service;
 import com.Webdrama.Rodanthe.dto.SearchWorkDto;
 import com.Webdrama.Rodanthe.dto.WorkDto;
 import com.Webdrama.Rodanthe.dto.request.WorkRequestDto;
+import com.Webdrama.Rodanthe.entity.Jjim;
 import com.Webdrama.Rodanthe.entity.Work;
+import com.Webdrama.Rodanthe.repository.JjimRepository;
 import com.Webdrama.Rodanthe.repository.WorkRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,10 +20,12 @@ import java.util.Optional;
 public class WorkService {
 
     private WorkRepository workRepository;
+    private JjimRepository jjimRepository;
     private final S3UploadService s3UploadService;
-    public WorkService(WorkRepository workRepository, S3UploadService s3UploadService){
+    public WorkService(WorkRepository workRepository, S3UploadService s3UploadService, JjimRepository jjimRepository){
         this.workRepository = workRepository;
         this.s3UploadService = s3UploadService;
+        this.jjimRepository = jjimRepository;
     }
 
     public void updateCoverImg(Long workId){
@@ -78,4 +83,31 @@ public class WorkService {
             workRepository.delete(work);
         }
     }
+
+    public boolean jjimGiveInfo(Long userId, Long workId){
+        List<Jjim> jjimList = jjimRepository.findAllById(userId);
+        boolean flag = false;
+        for(int i=0; i<jjimList.size(); i++){
+            Jjim jjim = jjimList.get(i);
+            if(jjim.getWorkId() == workId){
+                flag = true;
+                break;
+            }else{
+                flag = false;
+            }
+        }
+        return flag;
+    }
+
+    public void deleteJjim(Long userId, Long workId){
+        List<Jjim> jjimList = jjimRepository.findAllById(userId);
+        for(int i=0; i<jjimList.size(); i++){
+            Jjim jjim = jjimList.get(i);
+            if(jjim.getWorkId() == workId){
+                jjimRepository.delete(jjim);
+                break;
+            }
+        }
+    }
+
 }
