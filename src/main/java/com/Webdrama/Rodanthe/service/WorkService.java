@@ -1,5 +1,6 @@
 package com.Webdrama.Rodanthe.service;
 
+import com.Webdrama.Rodanthe.dto.JjimDto;
 import com.Webdrama.Rodanthe.dto.SearchWorkDto;
 import com.Webdrama.Rodanthe.dto.WorkDto;
 import com.Webdrama.Rodanthe.dto.request.WorkRequestDto;
@@ -108,6 +109,22 @@ public class WorkService {
                 break;
             }
         }
+    }
+
+    public List<JjimDto> jjimView(Long id){
+        List<List<Object>> listJjim = jjimRepository.getJjimInfo(id);
+        List<JjimDto> jjimDtoList = new ArrayList<>();
+
+       for(int i=0; i<listJjim.size(); i++){
+           Long workId = Long.valueOf(String.valueOf(listJjim.get(i).get(0)));
+           String coverImg = String.valueOf(listJjim.get(i).get(1));
+           String title = String.valueOf(listJjim.get(i).get(2));
+
+           JjimDto jjimDto = new JjimDto(workId,coverImg, title );
+           jjimDtoList.add(jjimDto);
+       }
+
+        return jjimDtoList;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.Webdrama.Rodanthe.controller;
 
+import com.Webdrama.Rodanthe.dto.JjimDto;
 import com.Webdrama.Rodanthe.dto.WorkDto;
 import com.Webdrama.Rodanthe.dto.request.JjimRequestDto;
 import com.Webdrama.Rodanthe.dto.request.WorkRequestDto;
@@ -15,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Log4j2
 @RestController
@@ -90,6 +90,9 @@ public class WorkMemberController {
         return "찜하기가 취소되었습니다.";
     }
 
-
+    @GetMapping("/jjim/view/{userId}")
+    public List<JjimDto> jjimGetInfo(@PathVariable Long userId){
+        return workService.jjimView(userId);
+    }
 
 }
