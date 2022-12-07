@@ -111,6 +111,7 @@ public class WorkService {
         }
     }
 
+/*
     public List<JjimDto> jjimView(Long id){
         List<List<Object>> listJjim = jjimRepository.getJjimInfo(id);
         List<JjimDto> jjimDtoList = new ArrayList<>();
@@ -126,5 +127,22 @@ public class WorkService {
 
         return jjimDtoList;
     }
+*/
 
+    public List<JjimDto> jjimView(Long userId){
+        List<Jjim> jjimList = jjimRepository.findAllById(userId);
+        if(!jjimList.isEmpty()){
+            List<JjimDto> jjimDtoList = new ArrayList<>();
+            for(int i=0; i< jjimList.size(); i++){
+                Jjim jjim = jjimList.get(i);
+                Long workId = jjim.getWorkId();
+                Optional<Work> work = workRepository.findByWorkId(workId);
+
+                JjimDto jjimDto = new JjimDto(work.get().getWorkId(), work.get().getCoverImg(), work.get().getTitle());
+                jjimDtoList.add(jjimDto);
+            }
+            return jjimDtoList;
+        }
+        return null;
+    }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public interface JjimRepository extends JpaRepository<Jjim, Long> {
     List<Jjim> findAllById(Long id);
 
-    @Query("SELECT j.workId, w.coverImg, w.title FROM Jjim j LEFT JOIN Work w ON j.workId = w.workId WHERE w.id=:id")
+    @Query("SELECT j.workId, w.coverImg, w.title FROM Jjim j JOIN Work w ON j.workId = w.workId WHERE w.id=:id")
     List<List<Object>> getJjimInfo(@Param("id") Long id);
 
 }

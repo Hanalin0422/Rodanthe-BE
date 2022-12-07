@@ -92,7 +92,8 @@ public class WorkMemberController {
 
     @GetMapping("/jjim/view/{userId}")
     public List<JjimDto> jjimGetInfo(@PathVariable Long userId){
-        return workService.jjimView(userId);
+        List<JjimDto> jjimList = workService.jjimView(userId);
+        return jjimList;
     }
 
 }
