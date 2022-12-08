@@ -1,5 +1,6 @@
 package com.Webdrama.Rodanthe.controller;
 
+import com.Webdrama.Rodanthe.dto.NumMainPageDto;
 import com.Webdrama.Rodanthe.dto.SearchWorkDto;
 import com.Webdrama.Rodanthe.dto.request.WorkSearchRequestDto;
 import com.Webdrama.Rodanthe.entity.Video;
@@ -50,6 +51,13 @@ public class WorkController {
         List<SearchWorkDto> works = workService.giveSearchWork(searchWord);
 
         return works;
+    }
+
+    @GetMapping("/main")
+    public NumMainPageDto giveCountThings(){
+        NumMainPageDto numMainPageDto = workService.giveCountThings();
+
+        return numMainPageDto;
     }
 
 }

@@ -28,6 +28,10 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
     @Query("SELECT w FROM Work as w WHERE w.title LIKE %:searchWord%")
     List<Work> searchWork(@Param("searchWord") String searchWord);
 
+    //작품 수 구하기
+    @Query("SELECT COUNT(workId) as cnt FROM Work")
+    Long countWork();
+
 
 
 }

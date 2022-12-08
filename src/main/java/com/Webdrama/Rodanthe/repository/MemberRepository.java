@@ -23,4 +23,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("UPDATE Member m SET m.refreshToken=:token WHERE m.id=:id")
     void updateRefreshToken(@Param("id") Long id, @Param("token") String token);
 
+    @Query("SELECT COUNT(id) as cnt FROM Member")
+    Long countMember();
 }

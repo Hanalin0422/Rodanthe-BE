@@ -1,12 +1,15 @@
 package com.Webdrama.Rodanthe.service;
 
 import com.Webdrama.Rodanthe.dto.JjimDto;
+import com.Webdrama.Rodanthe.dto.NumMainPageDto;
 import com.Webdrama.Rodanthe.dto.SearchWorkDto;
 import com.Webdrama.Rodanthe.dto.WorkDto;
 import com.Webdrama.Rodanthe.dto.request.WorkRequestDto;
 import com.Webdrama.Rodanthe.entity.Jjim;
 import com.Webdrama.Rodanthe.entity.Work;
 import com.Webdrama.Rodanthe.repository.JjimRepository;
+import com.Webdrama.Rodanthe.repository.MemberRepository;
+import com.Webdrama.Rodanthe.repository.VideoRepository;
 import com.Webdrama.Rodanthe.repository.WorkRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +23,23 @@ import java.util.Optional;
 @Service
 public class WorkService {
 
+    private MemberRepository memberRepository;
     private WorkRepository workRepository;
     private JjimRepository jjimRepository;
+    private VideoRepository videoRepository;
+
     private final S3UploadService s3UploadService;
-    public WorkService(WorkRepository workRepository, S3UploadService s3UploadService, JjimRepository jjimRepository){
+    public WorkService(WorkRepository workRepository,
+                       S3UploadService s3UploadService,
+                       JjimRepository jjimRepository,
+                       MemberRepository memberRepository,
+                       VideoRepository videoRepository
+    ){
         this.workRepository = workRepository;
         this.s3UploadService = s3UploadService;
         this.jjimRepository = jjimRepository;
+        this.memberRepository = memberRepository;
+        this.videoRepository = videoRepository;
     }
 
     public void updateCoverImg(Long workId){
@@ -127,7 +140,9 @@ public class WorkService {
 
         return jjimDtoList;
     }
-*/
+
+ */
+
 
     public List<JjimDto> jjimView(Long userId){
         List<Jjim> jjimList = jjimRepository.findAllById(userId);
@@ -145,4 +160,15 @@ public class WorkService {
         }
         return null;
     }
+
+    public NumMainPageDto giveCountThings(){
+        Long countWorkId = workRepository.countWork();
+        Long countMemberId = memberRepository.countMember();
+        Long countVideoId = videoRepository.countVideo();
+
+        NumMainPageDto numMainPageDto = new NumMainPageDto(countWorkId, countMemberId, countVideoId);
+
+        return numMainPageDto;
+    }
+
 }
